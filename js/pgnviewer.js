@@ -5,8 +5,8 @@ function writeGameText(g) {
 
   //remove the header to get the moves
   var h = g.header();
-  var gameHeaderText = `<h4>${h.White || 'Unknown white player'} - ${h.Black || 'Unknown black player'}</h4>`;
-  gameHeaderText += `<h5>${h.Event || 'Unknown event'}, ${h.Site || 'Unknown site'} ${h.EventDate || 'Unknown date'}</h5>`;
+  var gameHeaderText = `<h4 class="text-black-50">${h.White || 'Unknown white player'} - ${h.Black || 'Unknown black player'}</h4>`;
+  gameHeaderText += `<h5 class="text-black-50">${h.Event || 'Unknown event'}, ${h.Site || 'Unknown site'} ${h.EventDate || 'Unknown date'}</h5>`;
   var pgn = g.pgn();
   var gameMoves = pgn.replace(/\[(.*?)\]/gm, '').replace(h.Result, '').trim();
 
@@ -17,14 +17,14 @@ function writeGameText(g) {
     if (!/^[0-9]+\.$/.test(s)) { //move numbers
       m = s.split(/\s+/);
       for (var j = 0, ll = m.length; j < ll; ++j) {
-        m[j] = '<span class="gameMove' + (i + j - 1) + '"><a id="myLink" href="#" onclick="goToMove(' + (i + j - 1) + ');return false;">' + m[j] + '</a></span>';
+        m[j] = `<span class="gameMove${(i + j - 1)}"><a class="text-info" href="#" onclick="goToMove(${(i + j - 1)});return false;">${m[j]}</a></span>`;
       }
       s = m.join(' ');
     }
     moveArray[i] = s;
   }
 
-  var gameData = gameHeaderText + '<div class="gameMoves">' + moveArray.join(' ');
+  var gameData = `${gameHeaderText}<div class="gameMoves">${moveArray.join(' ')}`;
   if (h.Result)
       gameData += ` <span class="gameResult">${h.Result}</span></div>`;
   $("#game-data").html(gameData);
@@ -158,7 +158,7 @@ $(document).ready(function() {
         $('#gameSelect')
             .append($('<option></option>')
             .attr('value', i)
-            .text(h.White + ' - ' + h.Black + ', ' + h.Date));
+            .text(`${h.White} - ${h.Black}, ${h.Date}`));
     }
 
     //set up the board

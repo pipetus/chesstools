@@ -5,10 +5,12 @@
     <title>ChessTools</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic|Roboto+Slab:400,700' rel='stylesheet' type='text/css'>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet" crossorigin="anonymous">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" crossorigin="anonymous" /> -->
     <link rel="stylesheet" href="/chessboardjs/css/chessboard-0.3.0.min.css" />
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <!--[if IE]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,35 +22,34 @@
   <body>
     <div class="container">
       <div class="page-header">
-        <h1>ChessTools</h1>
+        <h1 class="text-monospace">ChessTools</h1>
       </div>
       <div class="row">
-        <div class="col-xs-4">
+        <div class="col-5">
           <div id="board" style="width: 100%;"></div>
           <div id="board-buttons">
-            <button type="button" class="btn btn-default" id="btnStart"><i class="fa fa-fast-backward fa-lg"></i></button>
-            <button type="button" class="btn btn-default" id="btnPrevious"><i class="fa fa-step-backward fa-lg"></i></button>
-            <button type="button" class="btn btn-default" id="btnNext"><i class="fa fa-step-forward fa-lg"></i></button>
-            <button type="button" class="btn btn-default" id="btnEnd"><i class="fa fa-fast-forward fa-lg"></i></button>
+            <button type="button" class="btn btn-secondary" id="btnStart"><i class="fa fa-fast-backward fa-lg"></i></button>
+            <button type="button" class="btn btn-secondary" id="btnPrevious"><i class="fa fa-step-backward fa-lg"></i></button>
+            <button type="button" class="btn btn-secondary" id="btnNext"><i class="fa fa-step-forward fa-lg"></i></button>
+            <button type="button" class="btn btn-secondary" id="btnEnd"><i class="fa fa-fast-forward fa-lg"></i></button>
+            <button type="button" class="btn btn-primary" id="btnAnalyze"><i class="fa fa-flask fa-lg"></i></button>
           </div>
         </div>
-        <div class="col-xs-8">
-          <form class="form-horizontal" role="form">
+        <div class="col-7">
+          <form role="form">
             <div class="form-group">
-              <div class="row well-sm">
-                <label for="gameSelect" class="col-xs-4 control-label">Select game:</label>
-                <div class="col-xs-8">
-                  <select id="gameSelect" class="form-control input-sm" onchange="loadGame(this.value);return false;"></select>
+              <div class="form-row p-3">
+                <label for="gameSelect" class="col-2 col-form-label text-right">Select game:</label>
+                <div class="col-10">
+                  <select id="gameSelect" class="form-control" onchange="loadGame(this.value);return false;"></select>
                 </div>
               </div>
-              <div class="row well-sm">
-                <label for="pgn" class="col-xs-4 control-label">PGN:<br>
-                  <button type="button" class="btn btn-primary well-sm" id="btnLoad" onclick="loadPlainPgn(pgn.value)">Load</button>
+              <div class="form-row p-3">
+                <label for="pgn" class="col-2 col-form-label text-right">PGN:<br>
+                  <button type="button" class="btn btn-primary" id="btnLoad" onclick="loadPlainPgn(pgn.value)">Load</button>
                 </label>
-                <div class="col-xs-8">
-                  <textarea id="pgn" class="form-control input-sm"></textarea>
-                </div>
-                <div class="col-xs-8">
+                <div class="col-10">
+                  <textarea id="pgn" class="form-control h-100"></textarea>
                 </div>
               </div>
             </div>
@@ -57,7 +58,33 @@
           </div>
         </div>
       </div>
-      <div class="row hidden">
+      <div class="row">
+        <div class="col-4 card text-white bg-info">
+          <div class="card-body">
+            <div class="card-header">
+              <h6>Engine</h6>
+            </div>
+            <div id="engineStatus">
+              ...
+            </div>
+          </div>
+        </div>
+        <div class="col-8 card text-gray bg-light">
+          <div class="card-body">
+            <div class="card-header">
+              <h6>Evaluation</h6>
+            </div>
+            <div id="evaluation">
+              <samp class="" id="evalOutput">
+                Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.
+                Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,
+                cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.
+              </samp>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row invisible">
         <div class="col-xs-12">
           <h4>Keyboard Shortcuts</h4>
           <dl class="dl-horizontal">
