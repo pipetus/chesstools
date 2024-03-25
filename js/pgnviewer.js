@@ -5,8 +5,8 @@ function writeGameText(g) {
 
   //remove the header to get the moves
   var h = g.header();
-  var gameHeaderText = '<h4>' + h.White + ' - ' + h.Black + '</h4>';
-  gameHeaderText += '<h5>' + h.Event + ', ' + h.Site + ' ' + h.EventDate + '</h5>';
+  var gameHeaderText = `<h4>${h.White || 'Unknown white player'} - ${h.Black || 'Unknown black player'}</h4>`;
+  gameHeaderText += `<h5>${h.Event || 'Unknown event'}, ${h.Site || 'Unknown site'} ${h.EventDate || 'Unknown date'}</h5>`;
   var pgn = g.pgn();
   var gameMoves = pgn.replace(/\[(.*?)\]/gm, '').replace(h.Result, '').trim();
 
@@ -26,7 +26,7 @@ function writeGameText(g) {
 
   var gameData = gameHeaderText + '<div class="gameMoves">' + moveArray.join(' ');
   if (h.Result)
-      gameData += ' <span class="gameResult">' + h.Result + '</span></div>';
+      gameData += ` <span class="gameResult">${h.Result}</span></div>`;
   $("#game-data").html(gameData);
 
 }
@@ -130,6 +130,15 @@ function loadGame(i) {
   currentGame = i;
 }
 
+function loadPlainPgn(pgn) {
+  game = new Chess();
+  game.load_pgn(pgn, {newline_char:'\n'});
+  writeGameText(game);
+  gameHistory = game.history({verbose: true});
+  goToMove(-1);
+  // currentGame = i;
+}
+
 var board, //the chessboard
     game, //the current  game
     games, //array of all loaded games
@@ -139,7 +148,7 @@ var board, //the chessboard
 
 $(document).ready(function() {
     //start doing stuff
-    
+
     //only need the headers here, issue raised on github
     //read all the games to populate the select
     for (var i = 0; i < pgnData.length; i++) {
