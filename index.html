@@ -32,7 +32,7 @@
             <button type="button" class="btn btn-secondary" id="btnPrevious"><i class="fa fa-step-backward fa-lg"></i></button>
             <button type="button" class="btn btn-secondary" id="btnNext"><i class="fa fa-step-forward fa-lg"></i></button>
             <button type="button" class="btn btn-secondary" id="btnEnd"><i class="fa fa-fast-forward fa-lg"></i></button>
-            <button type="button" class="btn btn-primary" id="btnAnalyze"><i class="fa fa-flask fa-lg"></i></button>
+            <button type="button" class="btn btn-primary" id="btnAnalyze" title="Analyze"><i class="fa fa-flask fa-lg"></i></button>
           </div>
         </div>
         <div class="col-7">
@@ -64,8 +64,10 @@
             <div class="card-header">
               <h6>Engine</h6>
             </div>
-            <div id="engineStatus">
+            <div>
+              <samp id="engineStatus" class="text-white">
               ...
+              </samp>
             </div>
           </div>
         </div>
@@ -76,9 +78,6 @@
             </div>
             <div id="evaluation">
               <samp class="" id="evalOutput">
-                Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto.
-                Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500,
-                cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.
               </samp>
             </div>
           </div>
@@ -103,6 +102,8 @@
     <script src="/chessboardjs/js/chessboard-0.3.0.min.js"></script>
     <script src="/chessjs/chess.js"></script>
     <script src="/data/games.js"></script>
+    <script src="js/chesstools.js"></script>
     <script src="js/pgnviewer.js"></script>
+    <script src="js/stockfish.js"></script>
   </body>
 </html>

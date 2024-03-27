@@ -174,4 +174,5 @@ $(document).ready(function() {
     //load the first game
     loadGame(0);
     goToMove(gameHistory.length - 1);
+    console.log('ready');
 });
