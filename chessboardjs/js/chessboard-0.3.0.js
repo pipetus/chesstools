@@ -248,8 +248,16 @@ var ANIMATION_HAPPENING = false,
   DRAGGING_A_PIECE = false,
   SPARE_PIECE_ELS_IDS = {},
   SQUARE_ELS_IDS = {},
-  SQUARE_ELS_OFFSETS;
-
+  SQUARE_ELS_OFFSETS,
+  PIECE_EVALUATIONS = {},
+  PIECE_VALUES = {
+    'p': 1,
+    'n': 3,
+    'b': 3,
+    'r': 5,
+    'q': 9,
+    'k': 100
+  }
 //------------------------------------------------------------------------------
 // JS Util Functions
 //------------------------------------------------------------------------------
@@ -651,19 +659,37 @@ function buildPieceImgSrc(piece) {
   return '';
 }
 
-function buildPiece(piece, hidden, id) {
+function calculatePieceRelativeValue(descriptor) {
+  const pieceValue = PIECE_VALUES[descriptor.piece.toLowerCase()];
+  const pieceRelativeValue = Math.abs(descriptor.value / pieceValue);
+
+  return pieceRelativeValue;
+}
+
+function calculatePieceValue(descriptor) {
+  return descriptor.value;
+}
+
+function buildPiece(piece, hidden, id, evaluation) {
   var html = '<img src="' + buildPieceImgSrc(piece) + '" ';
   if (id && typeof id === 'string') {
     html += 'id="' + id + '" ';
   }
   html += 'alt="" ' +
-  'class="' + CSS.piece + '" ' +
-  'data-piece="' + piece + '" ' +
-  'style="width: ' + SQUARE_SIZE + 'px;' +
-  'height: ' + SQUARE_SIZE + 'px;';
+  `class="${CSS.piece}"` +
+  `title="${(evaluation && calculatePieceValue(evaluation)) || ''}" ` +
+  `data-piece="${piece}"` +
+  `style="width: ${SQUARE_SIZE}px;`  +
+  `height: ${SQUARE_SIZE}px;`;
+
   if (hidden === true) {
     html += 'display:none;';
   }
+
+  if (evaluation) {
+    html += 'opacity: ' + calculatePieceRelativeValue(evaluation) + ';'
+  }
+
   html += '" />';
 
   return html;
@@ -971,7 +997,7 @@ function drawPositionInstant() {
   for (var i in CURRENT_POSITION) {
     if (CURRENT_POSITION.hasOwnProperty(i) !== true) continue;
 
-    $('#' + SQUARE_ELS_IDS[i]).append(buildPiece(CURRENT_POSITION[i]));
+    $('#' + SQUARE_ELS_IDS[i]).append(buildPiece(CURRENT_POSITION[i], undefined, undefined, PIECE_EVALUATIONS[i]));
   }
 }
 
@@ -1292,6 +1318,10 @@ function stopDraggedPiece(location) {
 // clear the board
 widget.clear = function(useAnimation) {
   widget.position({}, useAnimation);
+};
+
+widget.evaluation = function(evaluations) {
+  PIECE_EVALUATIONS = evaluations;
 };
 
 /*

@@ -9,8 +9,15 @@ $(document).on('evaler:status', function(event, data) {
 });
 
 $(document).on('evaler:content', function(event, data) {
+  evaluationParser.process(data.content);
   const content = data.content.replace(/ /g, '\u00a0');
   $('#evalOutput').append(`${content}<br>`);
+});
+
+$(document).on('evaler:evaluated', function(event, data) {
+  console.log('evaler evaluated:', event, data);
+  board.evaluation(data.evaluations);
+  board.position(game.fen(), false);
 });
 
 $('#btnAnalyze').on('click', function() {
