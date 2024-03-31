@@ -168,7 +168,7 @@ $(document).ready(function() {
         showNotation: false,
         onChange: onChange
     };
-    board = new ChessBoard('board', cfg);
+    board = new Chessboard2('board', cfg);
     $(window).resize(board.resize);
 
     //load the first game
