@@ -26,6 +26,7 @@ const analysisParser = {
       $(document).trigger('analysis:bestmove', {
         bestMove: this.bestMove,
       });
+      $(document).trigger('engine:status', { status: 'ready' });
     }
   },
   process: function (line) {
@@ -45,6 +46,7 @@ const analysisParser = {
     // try to parse analysis
     if (line.indexOf("info string NNUE evaluation enabled.") !== -1) {
       if (this.parsing) return;
+      $(document).trigger('engine:status', { status: 'analyzing' });
       this.start();
       return;
     }
