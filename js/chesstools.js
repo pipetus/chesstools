@@ -16,8 +16,9 @@ $(document).on('evaler:content', function(event, data) {
 
 $(document).on('evaler:evaluated', function(event, data) {
   console.log('evaler evaluated:', event, data);
-  board.evaluation(data.evaluations);
-  board.position(game.fen(), false);
+  board.setEvaluations(data.evaluations);
+  // board.position(game.fen());
+  board.redraw();
 });
 
 $('#btnAnalyze').on('click', function() {
