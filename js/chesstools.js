@@ -1,10 +1,10 @@
 $(document).on('engine:status', function(event, data) {
-  console.log('engine status:', event, data);
+  // console.log('engine status:', event, data);
   $('#engineStatus').text(data.status);
 });
 
 $(document).on('evaler:status', function(event, data) {
-  console.log('evaler status:', event, data);
+  // console.log('evaler status:', event, data);
   $('#evalerStatus').text(data.status);
 });
 
@@ -15,9 +15,8 @@ $(document).on('evaler:content', function(event, data) {
 });
 
 $(document).on('evaler:evaluated', function(event, data) {
-  console.log('evaler evaluated:', event, data);
+  // console.log('evaler evaluated:', event, data);
   board.setEvaluations(data.evaluations);
-  // board.position(game.fen());
   board.redraw();
 });
 

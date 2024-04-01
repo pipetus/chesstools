@@ -21,16 +21,16 @@ function buildEngine() {
     return function onMessage(event) {
       const line = event && typeof event === "object" ? event.data : event;
 
-      console.log('engine', event.data);
+      // console.log('engine', event.data);
 
       if (line === 'uciok') {
         instance.status = 'loaded';
         $(document).trigger('engine:status', { status: 'loaded' });
-        console.log('engine uciok');
+        // console.log('engine uciok');
       } else if (line === 'readyok') {
         instance.status = 'ready';
         $(document).trigger('engine:status', { status: 'ready' });
-        console.log('engine readyok');
+        // console.log('engine readyok');
       }
     };
   });
@@ -50,18 +50,18 @@ function buildEvaler() {
     return function onMessage(event) {
       const line = event && typeof event === "object" ? event.data : event;
 
-      console.log('evaler', event.data);
+      // console.log('evaler', event.data);
 
       $(document).trigger('evaler:content', { content: line });
 
       if (line === 'uciok') {
         instance.status = 'loaded';
         $(document).trigger('evaler:status', { status: 'loaded' });
-        console.log('evaler uciok');
+        // console.log('evaler uciok');
       } else if (line === 'readyok') {
         instance.status = 'ready';
         $(document).trigger('evaler:status', { status: 'ready' });
-        console.log('evaler readyok');
+        // console.log('evaler readyok');
       }
     };
   });
