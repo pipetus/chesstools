@@ -1,8 +1,3 @@
-const INFO = /^info .*\bdepth (\d+) .*\bnps (\d+)/;
-const BESTMOVE = /^bestmove ([a-h][1-8])([a-h][1-8])([qrbn])?/;
-const SCORE = /^info .*\bscore (\w+) (-?\d+)/;
-const BOUND = /\b(upper|lower)bound\b/;
-
 function Stockfish(onMessage) {
   const stockfish = new Worker('/stockfish/stockfish.js#/stockfish/stockfish.wasm');
   stockfish.onmessage = onMessage(stockfish);
@@ -21,7 +16,7 @@ function buildEngine() {
     return function onMessage(event) {
       const line = event && typeof event === "object" ? event.data : event;
 
-      // console.log('engine', event.data);
+      $(document).trigger('engine:content', { content: line });
 
       if (line === 'uciok') {
         instance.status = 'loaded';

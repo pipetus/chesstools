@@ -36,12 +36,14 @@ $('#btnStart').on('click', function() {
   game.reset();
   currentPly = -1;
   board.position(game.fen());
+  board.clearArrows();
 });
 $('#btnPrevious').on('click', function() {
   if (currentPly >= 0) {
     game.undo();
     currentPly--;
     board.position(game.fen());
+    board.clearArrows();
   }
 });
 $('#btnNext').on('click', function() {
@@ -49,6 +51,7 @@ $('#btnNext').on('click', function() {
     currentPly++;
     game.move(gameHistory[currentPly].san);
     board.position(game.fen());
+    board.clearArrows();
   }
 });
 $('#btnEnd').on('click', function() {
@@ -57,6 +60,7 @@ $('#btnEnd').on('click', function() {
     game.move(gameHistory[currentPly].san);
   }
   board.position(game.fen());
+  board.clearArrows();
 });
 
 //key bindings

@@ -14,15 +14,29 @@ $(document).on('evaler:content', function(event, data) {
   $('#evalOutput').append(`${content}<br>`);
 });
 
+$(document).on('engine:content', function(event, data) {
+  analysisParser.process(data.content);
+  const content = data.content.replace(/ /g, '\u00a0');
+  $('#engineOutput').append(`${content}<br>`);
+});
+
 $(document).on('evaler:evaluated', function(event, data) {
   // console.log('evaler evaluated:', event, data);
   board.setEvaluations(data.evaluations);
   board.redraw();
 });
 
+$(document).on('analysis:bestmove', function(event, data) {
+  console.log('analysis bestmove:', event, data);
+  board.addArrow(
+    `${data.bestMove.from}-${data.bestMove.to}`
+  )
+});
+
 $('#btnAnalyze').on('click', function() {
   console.log('analyze');
   $('#evalOutput').text('');
+  $('#engineOutput').text('');
 
   engine.analyze(game.fen());
   evaler.evaluate(game.fen());
