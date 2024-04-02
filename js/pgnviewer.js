@@ -117,6 +117,7 @@ function goToMove(ply) {
   }
   currentPly = i - 1;
   board.position(game.fen());
+  board.clearArrows();
 }
 
 var onChange = function onChange() { //fires when the board position changes
@@ -178,5 +179,4 @@ $(document).ready(function() {
     //load the first game
     loadGame(0);
     goToMove(gameHistory.length - 1);
-    console.log('ready');
 });

@@ -1,6 +1,14 @@
 $(document).on('engine:status', function(event, data) {
   // console.log('engine status:', event, data);
-  $('#engineStatus').text(data.status);
+  switch (data.status) {
+    case 'loaded':
+    case 'ready':
+      $('#engineStatus').text('\u2714').removeClass('spinner-border spinner-border-sm');
+      break;
+    case 'analyzing':
+      $('#engineStatus').text('').addClass('spinner-border spinner-border-sm');
+      break;
+  }
 });
 
 $(document).on('evaler:status', function(event, data) {
@@ -29,7 +37,8 @@ $(document).on('evaler:evaluated', function(event, data) {
 $(document).on('analysis:bestmove', function(event, data) {
   console.log('analysis bestmove:', event, data);
   board.addArrow(
-    `${data.bestMove.from}-${data.bestMove.to}`
+    `${data.bestMove.from}-${data.bestMove.to}`,
+    'blue',
   )
 });
 
